@@ -1,0 +1,94 @@
+/* ----- CONTENEDOR GENERAL ----- */
+.contenedor-form {
+  position: fixed; /* 🔹 fija al viewport */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh; /* 🔹 cubre toda la pantalla */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #3b006a, #00b7ff);
+  font-family: 'Poppins', sans-serif;
+  z-index: 999; /* 🔹 opcional: que quede sobre el resto */
+}
+
+
+/* ----- FORMULARIO ----- */
+.form-app {
+  background: #ffffff;
+  padding: 2.5rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  width: 100%;
+  max-width: 360px;
+  transition: all 0.3s ease-in-out;
+}
+
+/* ----- INPUTS DE TEXTO ----- */
+.form-app input[type="text"],
+.form-app input[type="tel"],
+.form-app input:not([type='color']):not([type='submit']) {
+  padding: 0.8rem 1rem;
+  border-radius: 10px;
+  border: 1.5px solid #05AAF4;
+  background-color: #f9fafb;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.form-app input[type="text"]:focus,
+.form-app input[type="tel"]:focus {
+  border-color: #05AAF4;
+  background-color: #ecfdf5;
+}
+
+/* ----- INPUT COLOR ----- */
+.form-app input[type="color"] {
+  height: 30px;
+  width: 100%;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  background-color: #f0fdf4;
+  transition: transform 0.2s;
+}
+
+.form-app input[type="color"]:hover {
+  transform: scale(1.03);
+}
+
+/* ----- BOTÓN ENVIAR ----- */
+.btn-cargar {
+  background: #05AAF4;
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  padding: 0.5rem;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.btn-cargar:hover {
+  background: #0578ad;
+}
+
+/* ----- RESPONSIVE ----- */
+@media (max-width: 600px) {
+  .form-app {
+    padding: 1.8rem;
+    border-radius: 1rem;
+  }
+
+  .btn-cargar {
+    font-size: 0.95rem;
+  }
+}
