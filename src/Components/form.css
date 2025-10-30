@@ -7,16 +7,16 @@
   height: 100vh; /* 🔹 cubre toda la pantalla */
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 50px;
   justify-content: center;
   align-items: center;
   background: linear-gradient(135deg, #3b006a, #00b7ff);
   font-family: 'Poppins', sans-serif;
   z-index: 999; /* 🔹 opcional: que quede sobre el resto */
 }
-
-
-/* ----- FORMULARIO ----- */
+.contenedor-form h1 {
+  color: white;
+}
 .form-app {
   background: #ffffff;
   padding: 2.5rem;
@@ -30,7 +30,6 @@
   transition: all 0.3s ease-in-out;
 }
 
-/* ----- INPUTS DE TEXTO ----- */
 .form-app input[type="text"],
 .form-app input[type="tel"],
 .form-app input:not([type='color']):not([type='submit']) {
@@ -49,7 +48,6 @@
   background-color: #ecfdf5;
 }
 
-/* ----- INPUT COLOR ----- */
 .form-app input[type="color"] {
   height: 30px;
   width: 100%;
@@ -64,7 +62,6 @@
   transform: scale(1.03);
 }
 
-/* ----- BOTÓN ENVIAR ----- */
 .btn-cargar {
   background: #05AAF4;
   color: #fff;

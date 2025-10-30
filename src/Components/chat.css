@@ -43,6 +43,13 @@
   align-items: center;
   background-color: white;
   width: 100%;
+  position: relative;
+}
+.borrar-mensaje {
+  position: absolute;
+  right: 20px;
+  background: none;
+  border: none;
 }
 .foto-perfil {
   display: flex;

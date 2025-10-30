@@ -48,7 +48,7 @@ const Form = ({
 
   return (
     <div className='contenedor-form'>
-      { !contactoUsuario ? <h2>Agregar nuevo contacto</h2> : <h2>Ingrese sus datos</h2>}
+      { !contactoUsuario ? <h1>Agregar nuevo contacto</h1> : <h1>Ingrese sus datos</h1>}
       <form 
         onSubmit={(e) => !contactoUsuario ? agregarContactos(e) : cargarInfoUser(e) }  
        className='form-app' > 
