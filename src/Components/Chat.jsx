@@ -84,9 +84,9 @@ const Chat = ({ chat,
               <button
                 className='borrar-mensaje'
                 type='button'
-                title='Borrar mensaje'
+                title='Retroceso'
                 onClick={() => { 
-                  console.log('eliminar mensaje')                                  
+                  console.log('Borrar mensaje de: ', idContacto)                                  
                 }}
                 >
                 <svg xmlns="http://www.w3.org/2000/svg" 

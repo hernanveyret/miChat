@@ -6,8 +6,7 @@ import { getData } from './firebase/auth';
 import './App.css'
 
 function App() {
-const config = localStorage.getItem('configMiChat')
-
+const config = localStorage.getItem('configMiChat');
 const [ userConfig, setUserConfig ] = useState(config ? JSON.parse(config) : [{ 
       id: '',
       nombre: '',
@@ -25,8 +24,9 @@ const [ nombreColorContacto, setNombreColorContacto ] = useState(null);
 const [ isHome, setIsHome ] = useState(true);
 const [ isChat, setIsChat ] = useState(false);
 const [ width, setWidth ] = useState(window.innerWidth);
-const [ isMovile, setIsMovile ] = useState(null)
+const [ isMovile, setIsMovile ] = useState(null);
 
+// Detecta el tamaño del viewPOrt asi pone el celular en movile o pc
  useEffect(() => {
   let timeout;
   const handleResize = () => {
@@ -58,12 +58,6 @@ useEffect(() => {
   console.log('configuracion de usuario: ', userConfig)
   localStorage.setItem('configMiChat', JSON.stringify(userConfig))
 },[userConfig])
-
-//console.log('contactos: ', contactos)
-
-useEffect(() => {
-  //console.log('id contacto', idContacto);
-},[idContacto])
 
   useEffect(() => {
     // Llamamos a getData y guardamos la función para dejar de escuchar luego

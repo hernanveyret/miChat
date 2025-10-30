@@ -92,7 +92,10 @@ const [ id, setId ] = useState(null);
               <div className='option-contactos'>
                 <button
                 title='Editar contacto'
-                onClick={() => { console.log('Click en le menu de editar contacto')}}
+                
+                onClick={(e) => { 
+                  e.stopPropagation();
+                  console.log('Click en le menu de editar contacto')}}
               >
                 <svg xmlns="http://www.w3.org/2000/svg" 
                   height="24px" 
@@ -103,12 +106,13 @@ const [ id, setId ] = useState(null);
                 </svg>
               </button>  
               <button
-              type='button'
+                type='button'
                 title='Borrar contacto'
-                onClick={() => { 
+                onClick={(e) => { 
+                  e.stopPropagation();
+                  console.log('borrar contacto')
                   setId(contacto.id);
-                  setIsDelete(true);                  
-                  
+                  setIsDelete(true);
                 }}
                 >
                 <svg xmlns="http://www.w3.org/2000/svg" 
