@@ -30,6 +30,17 @@ export const sendMessage = async (message, idContacto) => {
   }
 };
 
+// Borra la categoria o el prodructo seleccionada/o por ID
+export const borrarCategoria = async (idContacto) => {
+  try {
+    const docRef = doc(db,'chat', idContacto);
+    await deleteDoc(docRef);
+    return { ok: true };
+  } catch (error) {
+    return { ok: false, error };
+  }
+}
+
 // Escuchar cambios en tiempo real y descargarlos
 export const getData = (callback) => {
   try {
@@ -38,7 +49,7 @@ export const getData = (callback) => {
         id: doc.id,
         ...doc.data()
     }))
-    console.log('Usuarios', usuarios)
+    //console.log('Usuarios', usuarios)
     callback(usuarios);
   })
   return unsubscribe;

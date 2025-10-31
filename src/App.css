@@ -30,12 +30,18 @@ header {
   height: 40px;
   position: relative;
 }
-.btn-menu {
+.btn-retorno {
   position: absolute;
   left: 20px;
   border: none;
   background: transparent;
   display: none;
+}
+.btn-menu {
+  position: absolute;
+  right: 20px;
+  border: none;
+  background: transparent;
 }
 
 main {
@@ -61,7 +67,7 @@ footer {
   display: flex;
   flex-direction: column;
  }
- .btn-menu {
+ .btn-retorno {
   display: block;
  }
 }

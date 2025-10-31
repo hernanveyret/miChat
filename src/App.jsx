@@ -2,6 +2,8 @@ import React, { useState, useEffect, useEffectEvent } from 'react'
 import Home from './Components/Home';
 import Chat from './Components/Chat';
 import Form from './Components/Form';
+import FormEdit from './Components/FormEdit';
+import Menu from '../Menu';
 import { getData } from './firebase/auth';
 import './App.css'
 
@@ -17,14 +19,19 @@ const [ userConfig, setUserConfig ] = useState(config ? JSON.parse(config) : [{
 const [ chat, setChat ] = useState([])
 const [ loading, setLoading ] = useState(true)
 const [ contactoUsuario, setContactoUsuario ] = useState(userConfig.length > 0 ? userConfig[0].option : true); // true agrega contactos - false crea nuevo usuario
+const [ editContactoUsuario, setEditContactoUsuario ] = useState(true); // true edita contacto, false edita usuario
 const [ useForm, setUseForm ] = useState(userConfig.length > 0 ? userConfig[0].option : true);
 // numero de telefono del contacto
 const [ idContacto, setIdContacto  ] = useState(null);
+const [ idEditContacto, setIdEditContacto ] = useState(null);
 const [ nombreColorContacto, setNombreColorContacto ] = useState(null);
 const [ isHome, setIsHome ] = useState(true);
 const [ isChat, setIsChat ] = useState(false);
 const [ width, setWidth ] = useState(window.innerWidth);
 const [ isMovile, setIsMovile ] = useState(null);
+const [ isEdit, setIsEdit ] = useState(false);
+const [ isMenu, setIsMenu ] = useState(false);
+
 
 // Detecta el tamaño del viewPOrt asi pone el celular en movile o pc
  useEffect(() => {
@@ -73,6 +80,17 @@ useEffect(() => {
   return (
     <div className="contenedor-app">
       {
+        isEdit && 
+          <FormEdit 
+            userConfig={userConfig}
+            setUserConfig={setUserConfig}
+            editContactoUsuario={editContactoUsuario}
+            setEditContactoUsuario={setEditContactoUsuario}
+            setIsEdit={setIsEdit}
+            idEditContacto={idEditContacto}
+          />
+      }
+      {
         useForm &&
         <Form 
           contactoUsuario={contactoUsuario}
@@ -87,8 +105,9 @@ useEffect(() => {
         {
           isChat &&
           <button
+            title='Volver'
             onClick={() => { setIsHome(!isHome); setIsChat(!isChat)}}
-            className='btn-menu'
+            className='btn-retorno'
             >
             <svg xmlns="http://www.w3.org/2000/svg" 
               height="24px" 
@@ -98,6 +117,29 @@ useEffect(() => {
                 <path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z"/>
              </svg>
           </button>
+        }
+        <button
+          title='Menu'
+          type='button'
+          className='btn-menu'
+          onClick={() => { setIsMenu(!isMenu)}}  
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" 
+            height="24px" 
+            viewBox="0 -960 960 960" 
+            width="24px" 
+            fill="#000000">
+              <path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/>
+          </svg>
+        </button>
+
+        {
+          isMenu && 
+            <Menu 
+            setIsMenu={setIsMenu}
+            setIsEdit={setIsEdit}
+            setEditContactoUsuario={setEditContactoUsuario}
+            />
         }
         
       </header>
@@ -116,6 +158,9 @@ useEffect(() => {
               setIsHome={setIsHome}
               setIsChat={setIsChat}
               isMovile={isMovile}
+              setIsEdit={setIsEdit}
+              setEditContactoUsuario={setEditContactoUsuario}
+              setIdEditContacto={setIdEditContacto}
             />
         }
         {

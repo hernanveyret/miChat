@@ -30,14 +30,12 @@ const Form = ({
   // Agrega nuevos contactos
   const agregarContactos = (e) => {
     e.preventDefault();
-    console.log('cargar datos de contacto')
     const newContacto = {
       id: Date.now(),
       nombre: nombreContacto,
       telefono: telefonoContacto,
-      color: colorContacto
+      color: colorContacto || 'white'
     }
-    console.log(newContacto)
     setUserConfig((prev) => {
       const user = { ...prev[0] };
       user.contactos = [...user.contactos, newContacto];

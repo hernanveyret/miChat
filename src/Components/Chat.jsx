@@ -84,7 +84,7 @@ const Chat = ({ chat,
               <button
                 className='borrar-mensaje'
                 type='button'
-                title='Retroceso'
+                title='Borrar mensajes'
                 onClick={() => { 
                   console.log('Borrar mensaje de: ', idContacto)                                  
                 }}

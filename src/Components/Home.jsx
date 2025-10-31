@@ -12,9 +12,12 @@ const Home = ({
               setUserConfig,
               setIsHome,
               setIsChat,
-              isMovile
+              isMovile,
+              setIsEdit,
+              setEditContactoUsuario,
+              setIdEditContacto
             }) => {
-const [ isEdit, setIsEdit ] = useState(false);
+
 const [ isDelete, setIsDelete ] = useState(false);
 const [ nombre, setNombre ] = useState(null);
 const [ telefono, setTelefono ] = useState(null);
@@ -91,11 +94,14 @@ const [ id, setId ] = useState(null);
               <p>{contacto.nombre}</p>
               <div className='option-contactos'>
                 <button
-                title='Editar contacto'
-                
+                title='Editar contacto'                
                 onClick={(e) => { 
                   e.stopPropagation();
-                  console.log('Click en le menu de editar contacto')}}
+                  setIdEditContacto(contacto.id)
+                  setEditContactoUsuario(false)
+                  setIsEdit(true)
+                }}
+                  
               >
                 <svg xmlns="http://www.w3.org/2000/svg" 
                   height="24px" 
@@ -110,7 +116,6 @@ const [ id, setId ] = useState(null);
                 title='Borrar contacto'
                 onClick={(e) => { 
                   e.stopPropagation();
-                  console.log('borrar contacto')
                   setId(contacto.id);
                   setIsDelete(true);
                 }}
