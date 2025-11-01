@@ -62,7 +62,7 @@ const [ isMenu, setIsMenu ] = useState(false);
 
 // Muestra las configuraciones de usuario guardadas en localStorage y actualiza cuando hay un cambio
 useEffect(() => {
-  console.log('configuracion de usuario: ', userConfig)
+  //console.log('configuracion de usuario: ', userConfig)
   localStorage.setItem('configMiChat', JSON.stringify(userConfig))
 },[userConfig])
 
