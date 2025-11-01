@@ -25,7 +25,6 @@ const [ search, setSearch ] = useState([])
 const [ id, setId ] = useState(null);
 
 const buscarContacto = (item) => {
-  console.log(item)
   const resultados = userConfig[0].contactos.filter(e =>
    e.nombre.toLowerCase().includes(item.toLowerCase())
   );
