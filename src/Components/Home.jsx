@@ -50,6 +50,7 @@ const [ id, setId ] = useState(null);
             setUserConfig={setUserConfig}
             id={id}
             setIsDelete={setIsDelete}
+            setIdContacto={setIdContacto}
           />
       }
       <nav>
@@ -94,6 +95,7 @@ const [ id, setId ] = useState(null);
               <p>{contacto.nombre}</p>
               <div className='option-contactos'>
                 <button
+                type='button'
                 title='Editar contacto'                
                 onClick={(e) => { 
                   e.stopPropagation();

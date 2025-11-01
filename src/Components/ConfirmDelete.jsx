@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './confirmDelete.css';
 
-    const ConfirmDelete = ({  setUserConfig, id, setIsDelete }) => {
-
+    const ConfirmDelete = ({  setUserConfig, id, setIsDelete, setIdContacto }) => {
       const eliminarContacto = () => {
-
         setUserConfig((prev) => { 
           if(prev.length === 0) {
             return prev
@@ -15,8 +13,8 @@ import './confirmDelete.css';
           };
           return [update]
         });
-          setIsDelete(false)
-      
+        setIdContacto(null)
+        setIsDelete(false)      
         }
 
     return (

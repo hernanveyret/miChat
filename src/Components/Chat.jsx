@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { sendMessage } from '../firebase/auth.js';
+import { sendMessage, borrarMensaje } from '../firebase/auth.js';
 import './chat.css';
 
 const Chat = ({ chat, 
@@ -78,7 +78,7 @@ const Chat = ({ chat,
       <div className="box-level">
         <div className='box-name'>
           <p className="foto-perfil" style={idContacto ? {backgroundColor: nombreColorContacto.color }: {} }></p>
-          <p>{idContacto ? nombreColorContacto.nombre: 'Bienvenido a Mi Chat'}</p>
+          <p>{idContacto ? nombreColorContacto.nombre : 'Bienvenido a Mi Chat'}</p>
           {
             idContacto && 
               <button
@@ -86,6 +86,7 @@ const Chat = ({ chat,
                 type='button'
                 title='Borrar mensajes'
                 onClick={() => { 
+                  borrarMensaje(idContacto)
                   console.log('Borrar mensaje de: ', idContacto)                                  
                 }}
                 >
@@ -149,14 +150,6 @@ const Chat = ({ chat,
           </button>
         </form>
       </div>
-{/*
-      <button
-        className='btn-cerrar-level'
-        onClick={() => setStart(false)}
-      >
-        X
-      </button>
-*/}
     </div>
   );
 };
