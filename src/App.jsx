@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useEffectEvent } from 'react'
+import React, { useState, useEffect } from 'react'
 import Home from './Components/Home';
 import Chat from './Components/Chat';
 import Form from './Components/Form';
 import FormEdit from './Components/FormEdit';
 import Menu from '../Menu';
 import { getData } from './firebase/auth';
+import { messaging, getToken, onMessage } from "./firebase/config.js";
 import './App.css'
 
 function App() {
@@ -31,6 +32,32 @@ const [ width, setWidth ] = useState(window.innerWidth);
 const [ isMovile, setIsMovile ] = useState(null);
 const [ isEdit, setIsEdit ] = useState(false);
 const [ isMenu, setIsMenu ] = useState(false);
+
+
+
+
+/*---------------------------------------------------------------------------------------------------*/
+useEffect(() => {
+    Notification.requestPermission().then(async (permission) => {
+      if (permission === "granted") {
+        const token = await getToken(messaging, {
+          vapidKey: 'BFbh7niLE9zXDYZYaFNK31MDO-vr7B9ufEYPxwc9Cbe2ZBYIxEk57s4dI06THgDhBVIVp4Sg1Z41tXvyqME1z-g'
+        });
+        console.log("✅ Token del dispositivo:", token);
+        // 👉 Guardalo en Firestore en el documento del usuario
+      } else {
+        console.warn("❌ Permiso de notificaciones denegado");
+      }
+    });
+
+   onMessage(messaging, (payload) => {
+      console.log("📩 Notificación recibida (primer plano):", payload);
+      new Notification(payload.notification.title, {
+        body: payload.notification.body,
+        icon: "/icon-192x192.png",
+      });
+    });
+  }, []);
 
 
 // Detecta el tamaño del viewPOrt asi pone el celular en movile o pc

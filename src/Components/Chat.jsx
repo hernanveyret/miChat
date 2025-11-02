@@ -117,7 +117,7 @@ const Chat = ({ chat,
             ) 
             : 
             (
-            <p></p>
+            <p>No hay mensajes...</p>
             )
             :
             <div className="contenedor-logo">
