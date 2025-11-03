@@ -17,6 +17,7 @@ const provider = new GoogleAuthProvider();
 
 const chatDocId = "chat_unico"; 
 
+/*
 export const sendMessage = async (message, idContacto) => {
   const mensajes = idContacto; // nombre del campo dinámico
   try {
@@ -27,6 +28,24 @@ export const sendMessage = async (message, idContacto) => {
   } catch (error) {
     console.error("⛔ Error al guardar el mensaje:", error);
   }
+};
+*/
+export const sendMessage = async (message, idChat) => {
+  // idChat es el campo dinámico (ej: "11340254991134025488")
+  try {
+    const chatRef = doc(db, "chat", "mensajesguardado");
+    
+    // Usamos updateDoc para agregar el nuevo mensaje al sub-array 'mensajes'
+    // El nombre del campo debe ser dinámico: "ID_CHAT.mensajes"
+    await updateDoc(chatRef, {
+        [`${idChat}.mensajes`]: arrayUnion(message)
+    });
+    
+    // Opcional: Si necesitas crear el chat de cero, podrías usar setDoc con merge: true
+
+  } catch (error) {
+    console.error("⛔ Error al guardar el mensaje:", error);
+  }
 };
 
 export const borrarMensaje = async (idContacto) => {
