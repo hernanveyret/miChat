@@ -30,37 +30,33 @@ export const sendMessage = async (message, idContacto) => {
   }
 };
 */
-
-const generarIdChatConsistente = (num1, num2) => {
-// Ordena los números alfabéticamente (o numéricamente) y luego los concatena
-    const numerosOrdenados = [num1, num2].sort();
-    console.log('num 0',numerosOrdenados[0],'num 1', numerosOrdenados[1])
-    return numerosOrdenados[0] + numerosOrdenados[1];
-};
-
-// A. La función sendMessage simplificada
-// *Asumimos que message.user contiene el teléfono del remitente.*
-export const sendMessage = async (message, idContactoDestinatario) => { 
-    // 1. Extrae el número del remitente del objeto message
+export const sendMessage = async (message, idChatCompleto) => { 
     const miNumero = message.user; 
+    const LONGITUD_NUMERO = miNumero.length; 
     
-    // 2. Genera el ID Consistente (¡Aquí se usa tu función correctamente!)
-    const idChat = generarIdChatConsistente(miNumero, idContactoDestinatario); 
+    // Extrae los dos números de la cadena idChatCompleto
+    const num1 = idChatCompleto.substring(0, LONGITUD_NUMERO);
+    const num2 = idChatCompleto.substring(LONGITUD_NUMERO);
     
-    // 3. Obtiene el token
+    // Generamos el ID de chat consistente (¡la función ahora sí es útil!)
+    const generarIdChatConsistente = (n1, n2) => [n1, n2].sort().join('');
+    const idChatConsistente = generarIdChatConsistente(num1, num2); 
+    
     const currentTokenFCM = localStorage.getItem('fcmToken'); 
-    
-    // 4. Lógica de guardado (usa setDoc con merge: true para crear/actualizar)
+
     try {
         const chatRef = doc(db, "chat", "mensajesguardado");
+        
+        // Usamos el ID de chat CONSISTENTE y ORDENADO
         await setDoc(chatRef, {
-            [idChat]: {
+            [idChatConsistente]: {
                 tokens: {
                     [miNumero]: currentTokenFCM 
                 },
                 mensajes: arrayUnion(message)
             }
         }, { merge: true }); 
+
     } catch (error) {
         console.error("⛔ Error al guardar el mensaje:", error);
     }
