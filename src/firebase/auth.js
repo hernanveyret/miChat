@@ -34,12 +34,13 @@ export const sendMessage = async (message, idContacto) => {
 const generarIdChatConsistente = (num1, num2) => {
 // Ordena los números alfabéticamente (o numéricamente) y luego los concatena
     const numerosOrdenados = [num1, num2].sort();
-    //console.log(numerosOrdenados[0], numerosOrdenados[1])
-    return numerosOrdenados[1];
+    console.log('num 0',numerosOrdenados[0],'num 1', numerosOrdenados[1])
+    return numerosOrdenados[0] + numerosOrdenados[1];
 };
 export const sendMessage = async (message,  idContactoDestinatario) => { // idContactoDestinatario es el número del otro
     // Asegúrate de que message.user contenga el número de teléfono del remitente
     const miNumero = message.user; // Asumo que el objeto message tiene una propiedad 'user' para el remitente
+    console.log(miNumero)
     const idChat = generarIdChatConsistente(miNumero, idContactoDestinatario); // Usa la nueva función
     try {
         const chatRef = doc(db, "chat", "mensajesguardado");
