@@ -165,5 +165,8 @@
     width: 70%;
     height: 50%;
   }
+  .contacto, .usuario {
+    font-size: 1rem;
+  }
   
   }
