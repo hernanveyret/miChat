@@ -34,44 +34,68 @@ const [ isMovile, setIsMovile ] = useState(null);
 const [ isEdit, setIsEdit ] = useState(false);
 const [ isMenu, setIsMenu ] = useState(false);
 
+const generarIdChatConsistente = (num1, num2) => {
+// Ordena los números alfabéticamente (o numéricamente) y luego los concatena
+    const numerosOrdenados = [num1, num2].sort();
+    return numerosOrdenados[0] + numerosOrdenados[1];
+};
+
 useEffect(() => {
-    // ... (Código para solicitar permisos y obtener el token) ...
-
-    Notification.requestPermission().then(async (permission) => {
-        if (permission === "granted") {
-            const token = await getToken(messaging, { 
-                vapidKey: 'BFbh7niLE9zXDYZYaFNK31MDO-vr7B9ufEYPxwc9Cbe2ZBYIxEk57s4dI06THgDhBVIVp4Sg1Z41tXvyqME1z-g'
-            });
-            console.log("✅ Token del dispositivo:", token);
+    // 1. Lógica para solicitar permisos y obtener el token
+    const setupFCM = async () => {
+        try {
+            const permission = await Notification.requestPermission();
             
-            // 💡 LÓGICA PARA GUARDAR EL TOKEN EN LA ESTRUCTURA DE CHAT
-            const miTelefono = userConfig[0].telefono; 
-            const contactos = userConfig[0].contactos || [];
-            const chatRef = doc(db, "chat", "mensajesguardado"); 
-
-            // 1. Recorrer cada chat en el que estás involucrado:
-            contactos.forEach(async (contacto) => {
-                // 2. Crear el ID de chat (Debe coincidir con la clave que usas en Firestore)
-                // Asumo que tu lógica es: MiTel + ContactoTel (ajusta si usas orden ascendente)
-                const idChat = miTelefono + contacto.telefono; 
-
-                // 3. Usamos setDoc con merge: true para actualizar SOLO el token
-                await setDoc(chatRef, {
-                    [idChat]: {
-                        tokens: {
-                            [miTelefono]: token // Guardamos tu token usando tu teléfono como clave
-                        }
-                    }
-                }, { merge: true }); // Crucial para no sobrescribir los mensajes
-            });
-            // FIN DE LA LÓGICA DE GUARDADO DE TOKEN
-
-        } else {
-            console.warn("❌ Permiso de notificaciones denegado");
+            if (permission === "granted") {
+                
+                // 2. Obtener el Token FCM
+                const token = await getToken(messaging, { 
+                    vapidKey: 'BFbh7niLE9zXDYZYaFNK31MDO-vr7B9ufEYPxwc9Cbe2ZBYIxEk57s4dI06THgDhBVIVp4Sg1Z41tXvyqME1z-g'
+                });
+                console.log("✅ Token del dispositivo:", token);
+                
+                // 💡 ALMACENAR EL TOKEN para usarlo en sendMessage
+                localStorage.setItem('fcmToken', token);
+                
+            } else {
+                console.warn("❌ Permiso de notificaciones denegado");
+            }
+        } catch (error) {
+            console.error("Error al configurar FCM:", error);
         }
+    };
+    
+    setupFCM();
+    
+    // --- LÓGICA DE RECEPCIÓN DE MENSAJES (onMessage) ---
+    // Esta función maneja los mensajes entrantes cuando la app está en primer plano.
+    const unsubscribe = onMessage(messaging, (payload) => {
+        console.log('📩 Mensaje FCM recibido en primer plano:', payload);
+        
+        // Aquí puedes actualizar la UI del chat o mostrar una notificación in-app.
+        // Payload.notification contendrá el título y cuerpo si fue enviado como notification payload.
+        
+        // Ejemplo de notificación in-app manual (aunque Firebase Console ya lo hace si envías un 'notification' payload)
+        if (payload.notification) {
+             const title = payload.notification.title;
+             const options = {
+                 body: payload.notification.body,
+                 // icon: payload.notification.icon // Opcional: si quieres usar un ícono específico
+             };
+             new Notification(title, options);
+        }
+        
+        // Opcional: Recargar los mensajes del chat activo para mostrar el nuevo mensaje inmediatamente.
+        // Aquí iría la lógica para refrescar los datos de Firestore.
     });
-    // ... (El resto de tu useEffect)
-}, [userConfig]);
+
+    // Función de limpieza de React: se ejecuta cuando el componente se desmonta o el useEffect se re-ejecuta.
+    return () => {
+        // Detiene el listener de onMessage para evitar fugas de memoria
+        unsubscribe();
+    };
+
+}, [userConfig]); // Dependencia: Se re-ejecuta si userConfig cambia.
 
 
 

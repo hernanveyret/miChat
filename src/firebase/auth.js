@@ -30,22 +30,24 @@ export const sendMessage = async (message, idContacto) => {
   }
 };
 */
-export const sendMessage = async (message, idChat) => {
-  // idChat es el campo dinámico (ej: "11340254991134025488")
-  try {
-    const chatRef = doc(db, "chat", "mensajesguardado");
-    
-    // Usamos updateDoc para agregar el nuevo mensaje al sub-array 'mensajes'
-    // El nombre del campo debe ser dinámico: "ID_CHAT.mensajes"
-    await updateDoc(chatRef, {
-        [`${idChat}.mensajes`]: arrayUnion(message)
-    });
-    
-    // Opcional: Si necesitas crear el chat de cero, podrías usar setDoc con merge: true
 
-  } catch (error) {
-    console.error("⛔ Error al guardar el mensaje:", error);
-  }
+const generarIdChatConsistente = (num1, num2) => {
+// Ordena los números alfabéticamente (o numéricamente) y luego los concatena
+    const numerosOrdenados = [num1, num2].sort();
+    return numerosOrdenados[1];
+};
+export const sendMessage = async (message, miNumero, idContactoDestinatario) => { // idContactoDestinatario es el número del otro
+    // Asegúrate de que message.user contenga el número de teléfono del remitente
+    //const miNumero = message.user; // Asumo que el objeto message tiene una propiedad 'user' para el remitente
+    const idChat = generarIdChatConsistente(miNumero, idContactoDestinatario); // Usa la nueva función
+    try {
+        const chatRef = doc(db, "chat", "mensajesguardado");
+        await updateDoc(chatRef, {
+            [`${idChat}.mensajes`]: arrayUnion(message)
+        });
+    } catch (error) {
+        console.error("⛔ Error al guardar el mensaje:", error);
+    }
 };
 
 export const borrarMensaje = async (idContacto) => {
