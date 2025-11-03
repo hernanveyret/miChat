@@ -82,7 +82,6 @@ export const getData = (callback) => {
         id: doc.id,
         ...doc.data()
     }))
-    //console.log('Usuarios', usuarios)
     callback(usuarios);
   })
   return unsubscribe;

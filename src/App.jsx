@@ -52,7 +52,7 @@ useEffect(() => {
                 const token = await getToken(messaging, { 
                     vapidKey: 'BFbh7niLE9zXDYZYaFNK31MDO-vr7B9ufEYPxwc9Cbe2ZBYIxEk57s4dI06THgDhBVIVp4Sg1Z41tXvyqME1z-g'
                 });
-                console.log("✅ Token del dispositivo:", token);
+                //console.log("✅ Token del dispositivo:", token);
                 
                 // 💡 ALMACENAR EL TOKEN para usarlo en sendMessage
                 localStorage.setItem('fcmToken', token);
