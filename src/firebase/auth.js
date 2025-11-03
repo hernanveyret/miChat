@@ -37,19 +37,33 @@ const generarIdChatConsistente = (num1, num2) => {
     console.log('num 0',numerosOrdenados[0],'num 1', numerosOrdenados[1])
     return numerosOrdenados[0] + numerosOrdenados[1];
 };
-export const sendMessage = async (message,  idContactoDestinatario) => { // idContactoDestinatario es el número del otro
-    // Asegúrate de que message.user contenga el número de teléfono del remitente
-    const miNumero = message.user; // Asumo que el objeto message tiene una propiedad 'user' para el remitente
-    console.log(miNumero)
-    const idChat = generarIdChatConsistente(miNumero, idContactoDestinatario); // Usa la nueva función
-    try {
-        const chatRef = doc(db, "chat", "mensajesguardado");
-        await updateDoc(chatRef, {
-            [`${idChat}.mensajes`]: arrayUnion(message)
-        });
-    } catch (error) {
-        console.error("⛔ Error al guardar el mensaje:", error);
-    }
+
+// A. La función sendMessage simplificada
+// *Asumimos que message.user contiene el teléfono del remitente.*
+export const sendMessage = async (message, idContactoDestinatario) => { 
+    // 1. Extrae el número del remitente del objeto message
+    const miNumero = message.user; 
+    
+    // 2. Genera el ID Consistente (¡Aquí se usa tu función correctamente!)
+    const idChat = generarIdChatConsistente(miNumero, idContactoDestinatario); 
+    
+    // 3. Obtiene el token
+    const currentTokenFCM = localStorage.getItem('fcmToken'); 
+    
+    // 4. Lógica de guardado (usa setDoc con merge: true para crear/actualizar)
+    try {
+        const chatRef = doc(db, "chat", "mensajesguardado");
+        await setDoc(chatRef, {
+            [idChat]: {
+                tokens: {
+                    [miNumero]: currentTokenFCM 
+                },
+                mensajes: arrayUnion(message)
+            }
+        }, { merge: true }); 
+    } catch (error) {
+        console.error("⛔ Error al guardar el mensaje:", error);
+    }
 };
 
 export const borrarMensaje = async (idContacto) => {
