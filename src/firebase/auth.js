@@ -34,7 +34,7 @@ export const sendMessage = async (message, idContacto) => {
 const generarIdChatConsistente = (num1, num2) => {
 // Ordena los números alfabéticamente (o numéricamente) y luego los concatena
     const numerosOrdenados = [num1, num2].sort();
-    return numerosOrdenados[1];
+    return numerosOrdenados[0] + numerosOrdenados[1];
 };
 export const sendMessage = async (message, miNumero, idContactoDestinatario) => { // idContactoDestinatario es el número del otro
     // Asegúrate de que message.user contenga el número de teléfono del remitente
