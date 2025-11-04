@@ -47,9 +47,26 @@ const Form = ({
   return (
     <div className='contenedor-form'>
       { !contactoUsuario ? <h1>Agregar nuevo contacto</h1> : <h1>Ingrese sus datos</h1>}
-      <form 
+      <form         
         onSubmit={(e) => !contactoUsuario ? agregarContactos(e) : cargarInfoUser(e) }  
-       className='form-app' > 
+       className='form-app' >
+        <button
+        title='Cerrar'
+        type='button'
+        className='btn-cerrar-form-edit'
+        onClick={(e) => {
+          e.stopPropagation();
+          setUseForm(false)
+        }}
+        >
+        <svg xmlns="http://www.w3.org/2000/svg" 
+          height="24px" 
+          viewBox="0 -960 960 960" 
+          width="24px" 
+          fill="#000000">
+            <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/>
+        </svg>
+      </button>
         <input type="text" placeholder='Ingrese su nombre...' onChange={(e) => setNombreContacto(e.target.value)}/>
         <input type='' placeholder='Ingrese su número de telefono' onChange={(e) => setTelefonoContacto(e.target.value)}/>
         { !contactoUsuario && <input type="color" id="colorContacto" onChange={(e) => setColorContacto(e.target.value)}/>}

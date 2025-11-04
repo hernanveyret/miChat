@@ -36,11 +36,6 @@ const [ isMovile, setIsMovile ] = useState(null);
 const [ isEdit, setIsEdit ] = useState(false);
 const [ isMenu, setIsMenu ] = useState(false);
 
-const generarIdChatConsistente = (num1, num2) => {
-// Ordena los números alfabéticamente (o numéricamente) y luego los concatena
-    const numerosOrdenados = [num1, num2].sort();
-    return numerosOrdenados[0] + numerosOrdenados[1];
-};
 
 useEffect(() => {
     // 1. Lógica para solicitar permisos y obtener el token

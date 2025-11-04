@@ -30,7 +30,9 @@ export const sendMessage = async (message, idContacto) => {
   }
 };
 */
-export const sendMessage = async (message, idChatCompleto) => { 
+export const sendMessage = async (message, idChatConsistente, miNumero) => { 
+  /*
+  console.log(idChatCompleto)
     const miNumero = message.user; 
     const LONGITUD_NUMERO = miNumero.length; 
     
@@ -41,7 +43,7 @@ export const sendMessage = async (message, idChatCompleto) => {
     // Generamos el ID de chat consistente (¡la función ahora sí es útil!)
     const generarIdChatConsistente = (n1, n2) => [n1, n2].sort().join('');
     const idChatConsistente = generarIdChatConsistente(num1, num2); 
-    
+  */  
     const currentTokenFCM = localStorage.getItem('fcmToken'); 
 
     try {

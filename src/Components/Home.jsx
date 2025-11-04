@@ -31,6 +31,11 @@ const buscarContacto = (item) => {
   setSearch(resultados);
 };
 
+const generarIdChatConsistente = (n1, n2) => {
+  const idContactoGenerado = [n1, n2].sort().join('');
+  return idContactoGenerado
+} 
+
   return (
     <div className='contenedor-home'>
       {
@@ -84,7 +89,8 @@ const buscarContacto = (item) => {
           contactos.map((contacto, i) => (
             <div className='contacto-box' key={i} 
               onClick={() => { 
-                setIdContacto(chat[0][idtelefonoUsuario + contacto.telefono] ? idtelefonoUsuario + contacto.telefono : contacto.telefono + idtelefonoUsuario);
+                /*setIdContacto(chat[0][idtelefonoUsuario + contacto.telefono] ? idtelefonoUsuario + contacto.telefono : contacto.telefono + idtelefonoUsuario);*/
+                setIdContacto(generarIdChatConsistente(userConfig[0].telefono, contacto.telefono))
                 setNombreColorContacto({ nombre: contacto.nombre, color: contacto.color })
                 if(isMovile){
                   setIsChat(true)

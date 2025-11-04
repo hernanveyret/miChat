@@ -61,8 +61,9 @@ const Chat = ({ chat,
       user: userConfig[0].telefono,
       msj: valorInput,
       dia,
-      hora
-    },idContacto);
+      hora,
+      check: false
+    },idContacto, userConfig[0].telefono);
 
     setValorInput('');
 
