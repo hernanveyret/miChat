@@ -7,9 +7,11 @@ import Menu from '../Menu';
 import { getData } from './firebase/auth';
 import { doc, setDoc } from "firebase/firestore";
 import { messaging, getToken, onMessage, db } from "./firebase/config.js";
+
 import './App.css'
 
 function App() {
+  
 const config = localStorage.getItem('configMiChat');
 const [ userConfig, setUserConfig ] = useState(config ? JSON.parse(config) : [{ 
       id: '',
