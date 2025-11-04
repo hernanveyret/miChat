@@ -88,6 +88,9 @@
   text-align: end;
   font-size: 10px;
 }
+.userSpan svg, .contactSpan svg {
+  margin-left: 5px;
+}
 .contactSpan {
   text-align: start;
   font-size: 10px;

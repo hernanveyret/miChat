@@ -36,7 +36,6 @@ const [ isMovile, setIsMovile ] = useState(null);
 const [ isEdit, setIsEdit ] = useState(false);
 const [ isMenu, setIsMenu ] = useState(false);
 
-
 useEffect(() => {
     // 1. Lógica para solicitar permisos y obtener el token
     const setupFCM = async () => {
