@@ -110,9 +110,16 @@ const Chat = ({ chat,
              chat[0][idContacto] ? (
               chat[0][idContacto].mensajes.map((msj) =>
                 msj.user !== userConfig[0].telefono ? (
-                  <p className="contacto" key={msj.id}>{msj.msj}</p>
+                  <p className="contacto" key={msj.id}>
+                    {msj.msj}
+                    <span className='contactSpan'>{msj.hora}hs</span>
+                  </p>
+                  
                 ) : (
-                  <p className="usuario" key={msj.id}>{msj.msj}</p>
+                  <p className="usuario" key={msj.id}>
+                    {msj.msj}
+                    <span className='userSpan'>{msj.hora}hs</span>
+                  </p>
                 )
               )
             ) 
