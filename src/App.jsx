@@ -170,7 +170,7 @@ useEffect(() => {
   useEffect(() => {
     console.log('edit check')
     if( userConfig[0].telefono !== telContacto ){
-      idContacto && editarVisto(idContacto, telContacto)
+      idContacto && telContacto && editarVisto(idContacto, telContacto)      
     }
   },[chat])
 
