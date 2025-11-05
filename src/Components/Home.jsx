@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ConfirmDelete from './ConfirmDelete';
+import { editarVisto } from '../firebase/auth.js';
 import './home.css';
 
 const Home = ({ 
@@ -92,6 +93,7 @@ const generarIdChatConsistente = (n1, n2) => {
                 /*setIdContacto(chat[0][idtelefonoUsuario + contacto.telefono] ? idtelefonoUsuario + contacto.telefono : contacto.telefono + idtelefonoUsuario);*/
                 setIdContacto(generarIdChatConsistente(userConfig[0].telefono, contacto.telefono))
                 setNombreColorContacto({ nombre: contacto.nombre, color: contacto.color })
+                editarVisto(generarIdChatConsistente(userConfig[0].telefono, contacto.telefono), contacto.telefono)
                 if(isMovile){
                   setIsChat(true)
                   setIsHome(false)

@@ -8,6 +8,7 @@ import { collection,
          setDoc,
          updateDoc, 
          getDocs,
+         getDoc,
          arrayUnion, 
          arrayRemove,
         } from "firebase/firestore";
@@ -75,7 +76,65 @@ export const borrarMensaje = async (idContacto) => {
   }
 };
 
+export const editarVisto = async (idContacto, user) => {
+  try {
+    // 1. Referencia al Documento
+    // Colección: "chat", Documento: "mensajesguardado"
+    const docRef = doc(db, "chat", "mensajesguardado"); 
 
+    // 2. Obtener el Documento
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      const data = docSnap.data();
+      // Accede a la conversación específica usando la clave idContacto
+      const conversacion = data[idContacto];
+
+      if (conversacion && Array.isArray(conversacion.mensajes)) {
+        // 3. Modificar el Array Localmente
+        // Usamos .map para crear un nuevo array con el mensaje actualizado
+        const mensajesActualizados = conversacion.mensajes.map(mensaje => {
+          
+          // Condición: Si el 'user' coincide Y 'check' aún está en false
+          if (mensaje.user === user && mensaje.check === false) {
+            // Devuelve un nuevo objeto con check: true
+            return { ...mensaje, check: true }; 
+          }
+          
+          // Devuelve el mensaje sin cambios si no coincide
+          return mensaje; 
+        });
+
+        // 4. Actualizar el Campo Anidado en Firestore
+        // La sintaxis `${idContacto}.mensajes` le dice a Firestore exactamente qué campo actualizar.
+        const campoAActualizar = `${idContacto}.mensajes`;
+
+        await updateDoc(docRef, {
+          [campoAActualizar]: mensajesActualizados
+        });
+
+       // console.log("✅ Campo 'check' actualizado a true para el usuario:", user);
+      } else {
+        console.warn(`⚠️ No se encontró la conversación o el array 'mensajes' en ${idContacto}.`);
+      }
+    } else {
+      console.warn("⚠️ No se encontró el documento 'mensajesguardado'.");
+    }
+  } catch (error) {
+    console.error("❌ Error al editar el campo 'visto':", error);
+  }
+};
+
+/*
+export const editVisto = async (idproducto) => {
+  try {
+    const docRef = doc(db, "chat", "mensajesguardado");
+    await setDoc(docRef, {check: true}, { merge: true }); // al poner merge true solo actualiza activate
+  } catch (error) {
+    console.log('Error al actualizar Activate:', error)
+  }
+}
+*/
 // Escuchar cambios en tiempo real y descargarlos
 export const getData = (callback) => {
   try {
