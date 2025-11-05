@@ -38,10 +38,6 @@ const [ isMenu, setIsMenu ] = useState(false);
 const [ telContacto, setTelContacto ] = useState(null)
 
 useEffect(() => {
-  console.log(idEditContacto)
-},[idEditContacto])
-
-useEffect(() => {
     // 1. Lógica para solicitar permisos y obtener el token
     const setupFCM = async () => {
         try {
@@ -173,7 +169,9 @@ useEffect(() => {
 
   useEffect(() => {
     console.log('edit check')
+    if( userConfig[0].telefono !== telContacto ){
       idContacto && editarVisto(idContacto, telContacto)
+    }
   },[chat])
 
   return (
