@@ -17,7 +17,8 @@ const Home = ({
               isMovile,
               setIsEdit,
               setEditContactoUsuario,
-              setIdEditContacto
+              setIdEditContacto,
+              setTelContacto
             }) => {
 
 const [ isDelete, setIsDelete ] = useState(false);
@@ -94,6 +95,7 @@ const generarIdChatConsistente = (n1, n2) => {
                 setIdContacto(generarIdChatConsistente(userConfig[0].telefono, contacto.telefono))
                 setNombreColorContacto({ nombre: contacto.nombre, color: contacto.color })
                 editarVisto(generarIdChatConsistente(userConfig[0].telefono, contacto.telefono), contacto.telefono)
+                setTelContacto(contacto.telefono)
                 if(isMovile){
                   setIsChat(true)
                   setIsHome(false)

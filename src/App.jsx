@@ -4,7 +4,7 @@ import Chat from './Components/Chat';
 import Form from './Components/Form';
 import FormEdit from './Components/FormEdit';
 import Menu from '../Menu';
-import { getData } from './firebase/auth';
+import { getData, editarVisto } from './firebase/auth';
 import { doc, setDoc } from "firebase/firestore";
 import { messaging, getToken, onMessage, db } from "./firebase/config.js";
 
@@ -35,6 +35,11 @@ const [ width, setWidth ] = useState(window.innerWidth);
 const [ isMovile, setIsMovile ] = useState(null);
 const [ isEdit, setIsEdit ] = useState(false);
 const [ isMenu, setIsMenu ] = useState(false);
+const [ telContacto, setTelContacto ] = useState(null)
+
+useEffect(() => {
+  console.log(idEditContacto)
+},[idEditContacto])
 
 useEffect(() => {
     // 1. Lógica para solicitar permisos y obtener el token
@@ -159,11 +164,17 @@ useEffect(() => {
     const unsubscribe =  getData((data) => {
       setChat(data); // actualiza el estado cada vez que cambien los datos
       setLoading(false)
+    
     });
 
     // Cleanup: dejar de escuchar cuando el componente se desmonte
     return () => unsubscribe();
   }, [idContacto]);
+
+  useEffect(() => {
+    console.log('edit check')
+      idContacto && editarVisto(idContacto, telContacto)
+  },[chat])
 
   return (
     <div className="contenedor-app">
@@ -249,6 +260,7 @@ useEffect(() => {
               setIsEdit={setIsEdit}
               setEditContactoUsuario={setEditContactoUsuario}
               setIdEditContacto={setIdEditContacto}
+              setTelContacto={setTelContacto}
             />
         }
         {
