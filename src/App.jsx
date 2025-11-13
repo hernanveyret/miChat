@@ -174,6 +174,55 @@ useEffect(() => {
     }
   },[chat])
 
+
+// Detecta si un nuevo contacto mando un mensaje y no esta agendado
+ useEffect(() => {  
+  if (chat && chat.length > 0) { 
+    const datos = chat[0];    
+    if (typeof datos === 'object' && datos !== null) { 
+      const propiedades = Object.keys(datos);
+      propiedades.forEach(e => {
+        const numUno = e.slice(0,10)
+        const numDos = e.slice(10,20)
+        if(numUno === userConfig[0].telefono || numDos === userConfig[0].telefono){
+          if(numUno === userConfig[0].telefono){
+            const filtro = userConfig[0].contactos.find(e => e.telefono === numDos)
+            if(!filtro){
+              const newContacto = {
+                id: Date.now(),
+                nombre: numDos,
+                telefono: numDos,
+                color: '#FFFFFF'
+              }
+              setUserConfig((prev) => {
+                const user = { ...prev[0] };
+                user.contactos = [...user.contactos, newContacto];
+                return [user];
+              });
+              }            
+          }else{
+            const filtro = userConfig[0].contactos.find(e => e.telefono === numUno)
+            if(!filtro){
+              const newContacto = {
+                id: Date.now(),
+                nombre: numUno,
+                telefono: numUno,
+                color: '#FFFFFF'
+              }
+              setUserConfig((prev) => {
+                const user = { ...prev[0] };
+                user.contactos = [...user.contactos, newContacto];
+                return [user];
+              });
+              }
+          }    
+        }
+        
+      })
+    }
+  }
+}, [chat]);
+
   return (
     <div className="contenedor-app">
       {

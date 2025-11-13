@@ -34,7 +34,7 @@ const Form = ({
       id: Date.now(),
       nombre: nombreContacto,
       telefono: telefonoContacto,
-      color: colorContacto || 'white'
+      color: colorContacto || '#FFFFFF'
     }
     setUserConfig((prev) => {
       const user = { ...prev[0] };
